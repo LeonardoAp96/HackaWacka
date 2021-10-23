@@ -25,3 +25,33 @@
 #container a {
   text-decoration: none;
 }
+
+.colBloqueio{
+  width:100px;
+  text-align: center;
+}
+
+.colBloqueio ion-label{
+  width: 100px;
+  padding: 3px 5px;
+}
+
+.BloqueioImg{
+  height:100px;
+  width: 100px;
+  margin: 5px;
+}
+
+.labelBloqueio{
+  padding: 2px 0px;
+  text-align: center;
+  margin: 5px 0px;
+}
+
+.statusLigado{
+  background-color: green;
+}
+
+.statusDesligado{
+  background-color: red;
+}

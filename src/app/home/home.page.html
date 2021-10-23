@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      HackaWacka
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,6 +12,21 @@
       <ion-title size="large">HackaWacka</ion-title>
     </ion-toolbar>
   </ion-header>
+
+<h1>Fluxograma
+</h1>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-center" *ngFor="let item of linhaBloqueio" >
+        <div class="colBloqueio" >
+          <ion-label class="labelBloqueio">N. {{item.Numero}}</ion-label>
+          <ion-img  class="BloqueioImg" src="/assets/bloqueio.png"></ion-img>
+          <ion-label class="labelBloqueio status{{setCondicao(item.Condicao)}}">{{setCondicao(item.Condicao)}}</ion-label>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 
 </ion-content>
