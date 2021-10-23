@@ -113,7 +113,7 @@ export class HomePage {
     if(mediaOcupacao <.5){
       this.setLigarBloqueio(4);
     }
-    if(mediaOcupacao >.5){
+    if(mediaOcupacao >.51){
       this.setLigarBloqueio(3);
     }
     if(mediaOcupacao >.7){
