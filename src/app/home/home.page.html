@@ -14,14 +14,14 @@
   </ion-header>
 
   <ion-item>
-    <ion-datetime displayFormat="D MMM YYYY H:mm" min="1997" max="2010"></ion-datetime>
+    <ion-label>{{showData}}</ion-label>  
   </ion-item>
 
   <h1>Linha de Bloqueios</h1>
 
   <ion-grid>
     <ion-row *ngFor="let LinhaBloqueio of Plataformas">
-      <div *ngIf="LinhaBloqueio.LinhaBloqueio">
+      <div *ngIf="LinhaBloqueio.LinhaBloqueio.length > 0">
         <ion-row>
           <h3>Plataforma {{LinhaBloqueio.Nome}}</h3>
         </ion-row>
@@ -54,7 +54,11 @@
         <ion-progress-bar color="secondary" value="{{item.ContagemSul}}" buffer=".9"></ion-progress-bar>
       </div>
       <br>
+      <ion-icon class="iconArrow statusArrow{{setCondicaoArrowNorte(item)}}" name="arrow-back-circle-outline"></ion-icon>
+      <ion-icon class="iconArrow statusArrow{{setCondicaoArrowSul(item)}}" name="arrow-forward-circle-outline"></ion-icon>
+      <br><br>
     </ion-row>
   </ion-grid>
+
 
 </ion-content>

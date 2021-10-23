@@ -53,9 +53,23 @@
   background-color: red;
 }
 
+.statusArrowLigado{
+  color: green;
+}
+
+.statusArrowDesligado{
+  color: red;
+}
+
+.iconArrow{
+  scale:3;
+  margin-left: 50px;
+}
+
 ion-row {
   position: relative;
 }
+
 ion-progress-bar{
   margin: 5px;
 }
