@@ -31,20 +31,17 @@
   text-align: center;
 }
 
-.colBloqueio ion-label{
-  width: 100px;
-  padding: 3px 5px;
-}
-
 .BloqueioImg{
   height:100px;
   width: 100px;
   margin: 5px;
 }
 
-.labelBloqueio{
-  padding: 2px 0px;
+.labelBloqueio{  
+  width: 100px;
   text-align: center;
+
+  padding: 3px 5px;
   margin: 5px 0px;
 }
 
@@ -54,4 +51,11 @@
 
 .statusDesligado{
   background-color: red;
+}
+
+ion-row {
+  position: relative;
+}
+ion-progress-bar{
+  margin: 5px;
 }

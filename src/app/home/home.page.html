@@ -13,20 +13,42 @@
     </ion-toolbar>
   </ion-header>
 
-<h1>Fluxograma
-</h1>
+  <h1>Linha de Bloqueios</h1>
 
   <ion-grid>
-    <ion-row>
-      <ion-col class="ion-text-center" *ngFor="let item of linhaBloqueio" >
-        <div class="colBloqueio" >
-          <ion-label class="labelBloqueio">N. {{item.Numero}}</ion-label>
-          <ion-img  class="BloqueioImg" src="/assets/bloqueio.png"></ion-img>
-          <ion-label class="labelBloqueio status{{setCondicao(item.Condicao)}}">{{setCondicao(item.Condicao)}}</ion-label>
-        </div>
-      </ion-col>
+    <ion-row *ngFor="let LinhaBloqueio of Plataformas">
+      <ion-row>
+        <h3>Plataforma {{LinhaBloqueio.Nome}}</h3>
+      </ion-row>
+      <ion-row class="ion-nowrap">
+        <ion-col size="auto" class="ion-text-center" *ngFor="let item of LinhaBloqueio.LinhaBloqueio">
+
+          <div class="colBloqueio">
+            <ion-label class="labelBloqueio">N. {{item.Numero}}</ion-label>
+            <ion-img class="BloqueioImg" src="/assets/bloqueio.png"></ion-img>
+            <ion-label class="labelBloqueio status{{setCondicao(item.Condicao)}}">{{setCondicao(item.Condicao)}}
+            </ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
     </ion-row>
   </ion-grid>
 
+  <br>
+  <h3>Plataformas</h3>
+
+  <ion-grid>
+    <ion-row *ngFor="let item of Plataformas" style="display: inline;">
+      <ion-label><strong>Plataforma {{item.Nome}}</strong></ion-label>
+      <br>
+      <div>
+        <ion-label>Lado norte: {{setPercentual(item.ContagemNorte)}}% </ion-label>
+        <ion-progress-bar color="secondary" value="{{item.ContagemNorte}}" buffer=".9"></ion-progress-bar>
+        <ion-label>Lado sul: {{setPercentual(item.ContagemSul)}}%</ion-label>
+        <ion-progress-bar color="secondary" value="{{item.ContagemSul}}" buffer=".9"></ion-progress-bar>
+      </div>
+      <br>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
