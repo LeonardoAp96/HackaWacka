@@ -1,6 +1,5 @@
 import { getCurrencySymbol } from '@angular/common';
 import { Component } from '@angular/core';
-import { platform } from 'process';
 export interface Bloqueio{
   Numero: number,
   Condicao: Boolean
