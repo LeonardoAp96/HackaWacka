@@ -35,9 +35,26 @@
           <ion-button color="primary" (click)="tremNaPlataforma()">Trem nas plat.</ion-button>
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col size="auto" style="display: inline-grid;">
+          <ion-label>Coef. Bloqueio</ion-label>
+          <ion-input type="number" [(ngModel)]="coefPassageiro" min="1" max="8"></ion-input>
+        </ion-col>
+        <ion-col size="auto" style="display: inline-grid;">
+          <ion-label>Intervalo</ion-label>
+          <ion-input type="number" [(ngModel)]="tempoIntervalo" min="1" max="10"></ion-input>
+        </ion-col>
+        <ion-col size="auto" style="display: inline-grid;">
+          <ion-label>Headway em ciclos</ion-label>
+          <ion-input size="auto" type="number" [(ngModel)]="headwayPlataforma" min="1" max="30"></ion-input>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </ion-card>
 
+  
+
+  
 
   <ion-grid>
     <ion-row *ngFor="let LinhaBloqueio of Plataformas">

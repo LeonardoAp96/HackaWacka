@@ -18,30 +18,33 @@ export interface Plataforma{
 
 export class HomePage {
 
-  private TIME_INTERVAL : number = 3000; //milisegundos
+
   private NIVEL_WARNING : number = .7;
   private NIVEL_DANGER : number = .9;
-
-  routine = setInterval(()=>this.rotina(), this.TIME_INTERVAL);
-  public linhaBloqueio: Bloqueio[];
-  public Plataformas: Plataforma[];
-  public showData: String;
-  public coefPassageiro: number;
-  public noTrem: Boolean;
-  public modoManual: Boolean;
-
   private dataInicial: Date;
   private dataAtual: Date;
   private countSimultationTime: number;
 
+  public linhaBloqueio: Bloqueio[];
+  public Plataformas: Plataforma[];
+  public showData: String;
+  public coefPassageiro: number;
+  public headwayPlataforma:number;
+  public tempoIntervalo : number = 3; //segundos
+  public noTrem: Boolean;
+  public modoManual: Boolean;
+
+
   constructor() {
-    this.dataInicial = this.dataAtual = new Date();  
+    this.dataAtual = new Date();  
     this.coefPassageiro = 5;
+    this.headwayPlataforma = 10;
     this.countSimultationTime = 0;
     this.ShowDataRotina();
     this.montarPlataforma();
-  }
+  }  
   
+  routine = setInterval(()=>this.rotina(), this.tempoIntervalo * 1000);
 
   private montarPlataforma(){
     this.Plataformas = [
@@ -77,7 +80,7 @@ export class HomePage {
     let percentualPasgPlatNorte = 0;
     let percentualPasgPlatSul = 0;
 
-    if(this.countSimultationTime%10 == 0 && !this.noTrem){ //Passagem do trem
+    if(this.countSimultationTime%this.headwayPlataforma == 0 && !this.noTrem){ //Passagem do trem
       for(let count = 0; count < this.Plataformas.length; count++){
         percentualPasgPlatNorte = this.Plataformas[count].ContagemNorte *0.1;
         percentualPasgPlatSul = this.Plataformas[count].ContagemNorte *0.1;
