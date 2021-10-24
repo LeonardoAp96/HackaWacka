@@ -19,21 +19,25 @@ export interface Plataforma{
 export class HomePage {
 
   private TIME_INTERVAL : number = 3000; //milisegundos
+  private NIVEL_WARNING : number = .7;
+  private NIVEL_DANGER : number = .9;
+
   routine = setInterval(()=>this.rotina(), this.TIME_INTERVAL);
   public linhaBloqueio: Bloqueio[];
   public Plataformas: Plataforma[];
-  public showData: String = "Oi";
-  public noTrem: Boolean;
+  public showData: String;
   public coefPassageiro: number;
+  public noTrem: Boolean;
+  public modoManual: Boolean;
 
   private dataInicial: Date;
   private dataAtual: Date;
-  private countSimultationTime: number = 0;
-  
+  private countSimultationTime: number;
 
   constructor() {
     this.dataInicial = this.dataAtual = new Date();  
     this.coefPassageiro = 5;
+    this.countSimultationTime = 0;
     this.ShowDataRotina();
     this.montarPlataforma();
   }
@@ -73,7 +77,7 @@ export class HomePage {
     let percentualPasgPlatNorte = 0;
     let percentualPasgPlatSul = 0;
 
-    if(this.countSimultationTime%10 == 0){ //Passagem do trem
+    if(this.countSimultationTime%10 == 0 && !this.noTrem){ //Passagem do trem
       for(let count = 0; count < this.Plataformas.length; count++){
         percentualPasgPlatNorte = this.Plataformas[count].ContagemNorte *0.1;
         percentualPasgPlatSul = this.Plataformas[count].ContagemNorte *0.1;
@@ -107,25 +111,38 @@ export class HomePage {
 
     
     const mediaOcupacao = somaOcupacao / qtdPlat;
-    console.log(somaOcupacao, qtdPlat,  mediaOcupacao)
 
-    if(mediaOcupacao <.5){
-      this.setLigarBloqueio(4);
+    if(!this.modoManual){
+      if(mediaOcupacao <.5){
+        this.setLigarBloqueio(4);
+      }
+      if(mediaOcupacao >.51){
+        this.setLigarBloqueio(3);
+      }
+      if(mediaOcupacao >.7){
+        this.setLigarBloqueio(2);
+      }
+      if(mediaOcupacao >.8){
+        this.setLigarBloqueio(1);
+      }
+      if(mediaOcupacao >.9){
+        this.setLigarBloqueio(0);
+      }
     }
-    if(mediaOcupacao >.51){
-      this.setLigarBloqueio(3);
-    }
-    if(mediaOcupacao >.7){
-      this.setLigarBloqueio(2);
-    }
-    if(mediaOcupacao >.8){
-      this.setLigarBloqueio(1);
-    }
-
   }
 
 //Funcoes
+  public tremNaPlataforma(){
+    this.countSimultationTime = 10;
+    this.noTrem = false;
+  }
 
+  public toggleBloqueio(LinhaB:Plataforma, index:number){
+    if(!this.modoManual) return;
+    let val = !LinhaB.LinhaBloqueio[index].Condicao;
+    this.Plataformas[0].LinhaBloqueio[index].Condicao = val;
+  }
+  
   private setLigarBloqueio(number: Number){
     
     for (let index = 0; index < this.Plataformas[0].LinhaBloqueio.length; index++) {
@@ -168,12 +185,19 @@ export class HomePage {
     return val >1?1:val;
   }
 
-  public setCondicao(cond: Boolean){
+  public setCondicaoBloqueio(cond: Boolean){
     return cond ? "Ligado" : "Desligado";
   }
 
-  public setCondicaoArrow(cond: number){
-    return cond <.5 ? "Ligado" : "Desligado";
+  public setCondicaoProgressBar(cond: number){
+
+    if(cond >= this.NIVEL_DANGER)
+    return "danger"
+
+    if(cond >= this.NIVEL_WARNING)
+      return "warning"
+      
+    return "secondary";
   }
 
   public setCondicaoArrowNorte(cond: Plataforma){

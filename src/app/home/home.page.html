@@ -14,10 +14,30 @@
   </ion-header>
 
   <ion-item>
-    <ion-label>{{showData}}</ion-label>  
+    <ion-label>{{showData}}</ion-label>
   </ion-item>
 
   <h1>Linha de Bloqueios</h1>
+
+  <ion-card class="cardControle">
+    <h1>Controle das Simulações</h1>
+    <ion-grid>
+      <ion-row>
+        <ion-col style="display: inline-grid;">
+          <ion-label>Modo Manual</ion-label>
+          <ion-toggle [(ngModel)]="modoManual"></ion-toggle>
+        </ion-col>
+        <ion-col style="display: inline-grid;">
+          <ion-label>Sem trem</ion-label>
+          <ion-toggle [(ngModel)]="noTrem"></ion-toggle>
+        </ion-col>
+        <ion-col>
+          <ion-button color="primary" (click)="tremNaPlataforma()">Trem nas plat.</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
 
   <ion-grid>
     <ion-row *ngFor="let LinhaBloqueio of Plataformas">
@@ -26,13 +46,15 @@
           <h3>Plataforma {{LinhaBloqueio.Nome}}</h3>
         </ion-row>
         <ion-row class="">
-          <ion-col size="auto" class="ion-text-center" *ngFor="let item of LinhaBloqueio.LinhaBloqueio">
+          <ion-col size="auto" class="ion-text-center" *ngFor="let item of LinhaBloqueio.LinhaBloqueio, let i = index">
 
             <div class="colBloqueio">
               <ion-label class="labelBloqueio">N. {{item.Numero}}</ion-label>
-              <ion-img class="BloqueioImg" src="/assets/bloqueio.png"></ion-img>
-              <ion-label class="labelBloqueio status{{setCondicao(item.Condicao)}}">{{setCondicao(item.Condicao)}}
-              </ion-label>
+              <ion-img class="BloqueioImg" src="/assets/bloqueio.png" (click)="toggleBloqueio(LinhaBloqueio, i)"></ion-img>
+              
+
+                <ion-label class="labelBloqueio status{{setCondicaoBloqueio(item.Condicao)}}" >{{setCondicaoBloqueio(item.Condicao)}}</ion-label>
+
             </div>
           </ion-col>
         </ion-row>
@@ -49,13 +71,15 @@
       <br>
       <div>
         <ion-label>Lado norte: {{setPercentual(item.ContagemNorte)}}% </ion-label>
-        <ion-progress-bar color="secondary" value="{{item.ContagemNorte}}" buffer=".9"></ion-progress-bar>
+        <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemNorte)}}" value="{{item.ContagemNorte}}" buffer=".9"></ion-progress-bar>
         <ion-label>Lado sul: {{setPercentual(item.ContagemSul)}}%</ion-label>
-        <ion-progress-bar color="secondary" value="{{item.ContagemSul}}" buffer=".9"></ion-progress-bar>
+        <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemSul)}}" value="{{item.ContagemSul}}" buffer=".9"></ion-progress-bar>
       </div>
       <br>
-      <ion-icon class="iconArrow statusArrow{{setCondicaoArrowNorte(item)}}" name="arrow-back-circle-outline"></ion-icon>
-      <ion-icon class="iconArrow statusArrow{{setCondicaoArrowSul(item)}}" name="arrow-forward-circle-outline"></ion-icon>
+      <ion-icon class="iconArrow statusArrow{{setCondicaoArrowNorte(item)}}" name="arrow-back-circle-outline">
+      </ion-icon>
+      <ion-icon class="iconArrow statusArrow{{setCondicaoArrowSul(item)}}" name="arrow-forward-circle-outline">
+      </ion-icon>
       <br><br>
     </ion-row>
   </ion-grid>
