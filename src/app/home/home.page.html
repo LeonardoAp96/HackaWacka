@@ -99,8 +99,8 @@
         {{item.ContagemNorte}}<br>
         <ion-label>Lado Norte: {{setPercentual(item.ContagemNorte)}}% </ion-label>
         <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemNorte)}}" value="{{item.ContagemNorte}}" buffer=".9"></ion-progress-bar>
-        {{(item.ContagemNorte * 100).toFixed(2)}}<br>
-        <ion-label>Lado Sul: {{setPercentual(item.ContagemSul)}}%</ion-label>
+        {{(item.ContagemSul * 100).toFixed(2)}}<br>
+        <p>Lado Sul: {{setPercentual(item.ContagemSul)}}%</p>
         <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemSul)}}" value="{{item.ContagemSul}}" buffer=".9"></ion-progress-bar>
       </div>
     </ion-row>
