@@ -60,11 +60,6 @@ export class HomePage {
                           {Numero:7,Condicao: false},
                           {Numero:8,Condicao: false}],
       }
-      // ,{ Nome:"2", 
-      //   ContagemNorte:0.2, 
-      //   ContagemSul:0.2,
-      //   LinhaBloqueio: []
-      // }
     ];
   }
   
@@ -75,7 +70,7 @@ export class HomePage {
     this.countSimultationTime += 1;
   }
 
-  private Simulação(){
+  private Simulação(){ //Demostração de dados colhidos pela cameraxbloqueio
     let countBloqueio = 0;
     let percentualPasgPlatNorte = 0;
     let percentualPasgPlatSul = 0;
@@ -119,7 +114,7 @@ export class HomePage {
       if(mediaOcupacao <.5){
         this.setLigarBloqueio(4);
       }
-      if(mediaOcupacao >.51){
+      if(mediaOcupacao >=.5){
         this.setLigarBloqueio(3);
       }
       if(mediaOcupacao >.7){
@@ -133,6 +128,8 @@ export class HomePage {
       }
     }
   }
+
+
 
 //Funcoes
   public tremNaPlataforma(){

@@ -41,7 +41,7 @@
           <ion-input type="number" [(ngModel)]="coefPassageiro" min="1" max="8"></ion-input>
         </ion-col>
         <ion-col size="auto" style="display: inline-grid;">
-          <ion-label>Intervalo</ion-label>
+          <ion-label>Intervalo entre ciclos</ion-label>
           <ion-input type="number" [(ngModel)]="tempoIntervalo" min="1" max="10"></ion-input>
         </ion-col>
         <ion-col size="auto" style="display: inline-grid;">
@@ -100,6 +100,8 @@
         <ion-label>Lado Norte: {{setPercentual(item.ContagemNorte)}}% </ion-label>
         <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemNorte)}}" value="{{item.ContagemNorte}}" buffer=".9"></ion-progress-bar>
         {{(item.ContagemSul * 100).toFixed(2)}}<br>
+        
+        <ion-input type="number" value="{{setPercentual(item.ContagemSul)}}" disabled></ion-input>
         <span>Lado Norte: {{setPercentual(item.ContagemSul)}}% </span>
         <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemSul)}}" value="{{item.ContagemSul}}" buffer=".9"></ion-progress-bar>
       </div>
