@@ -56,12 +56,12 @@ export class HomePage {
                           {Numero:6,Condicao: false},
                           {Numero:7,Condicao: false},
                           {Numero:8,Condicao: false}],
-      },
-      { Nome:"2", 
-        ContagemNorte:0.2, 
-        ContagemSul:0.2,
-        LinhaBloqueio: []
       }
+      // ,{ Nome:"2", 
+      //   ContagemNorte:0.2, 
+      //   ContagemSul:0.2,
+      //   LinhaBloqueio: []
+      // }
     ];
   }
   
