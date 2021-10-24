@@ -18,7 +18,6 @@ export interface Plataforma{
 
 export class HomePage {
 
-
   private NIVEL_WARNING : number = .7;
   private NIVEL_DANGER : number = .9;
   private dataInicial: Date;
@@ -155,11 +154,11 @@ export class HomePage {
   }
 
   private ShowDataRotina(){
-    this.showData = this.dataAtual.getDay() + "/" + 
-                    this.dataAtual.getMonth()  + "/" + 
+    this.showData = this.setZeroData(this.dataAtual.getDate()) + "/" + 
+                    this.setZeroData((this.dataAtual.getMonth()+1))  + "/" + 
                     this.dataAtual.getFullYear() + "  " + 
-                    this.dataAtual.getHours() + ":" +
-                    this.dataAtual.getMinutes() + ":" +
+                    this.setZeroData(this.dataAtual.getHours()) + ":" +
+                    this.setZeroData(this.dataAtual.getMinutes()) + ":" +
                     this.dataAtual.getSeconds();
     
   }
@@ -200,11 +199,15 @@ export class HomePage {
     return "secondary";
   }
 
+ 
   public setCondicaoArrowNorte(cond: Plataforma){
     const condicao = cond.ContagemNorte;
     
     if(condicao < .5)
       return "Ligado";
+
+      if(condicao > .9)
+        return "Desligado";
     
     if(cond.ContagemSul > condicao)
       return "Ligado";
@@ -217,6 +220,9 @@ export class HomePage {
     
     if(condicao < .5)
       return "Ligado";
+
+    if(condicao > .9)
+      return "Desligado";
     
     if(cond.ContagemNorte > condicao)
       return "Ligado";
@@ -224,8 +230,12 @@ export class HomePage {
     return "Desligado";
   }
 
+  public setZeroData(numero: number){
+    return numero<=0? "0"+numero:numero;
+  }
+
   public setPercentual(numero: number){
     let num = numero * 100;
-    return num.toFixed(2).toString();
+    return num.toFixed(2).toString()+"%";
   }
 }

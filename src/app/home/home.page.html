@@ -14,8 +14,12 @@
   </ion-header>
 
   <ion-item>
-    <ion-label>{{showData}}</ion-label>
+    <div>
+      <ion-input class="ion-no-padding" value="{{showData}}" readonly></ion-input>
+    </div>
   </ion-item>
+
+
 
   <h1>Linha de Bloqueios</h1>
 
@@ -52,9 +56,9 @@
     </ion-grid>
   </ion-card>
 
-  
 
-  
+
+
 
   <ion-grid>
     <ion-row *ngFor="let LinhaBloqueio of Plataformas">
@@ -67,8 +71,11 @@
 
             <div class="colBloqueio">
               <ion-label class="labelBloqueio">N. {{item.Numero}}</ion-label>
-              <ion-img class="BloqueioImg" src="/assets/bloqueio.png" (click)="toggleBloqueio(LinhaBloqueio, i)"></ion-img>
-              <ion-text class="labelBloqueio status{{setCondicaoBloqueio(item.Condicao)}}" >{{setCondicaoBloqueio(item.Condicao)}}</ion-text>
+              <ion-img class="BloqueioImg" src="/assets/bloqueio.png" (click)="toggleBloqueio(LinhaBloqueio, i)">
+              </ion-img>
+                <div style="width:80px" class="labelBloqueio status{{setCondicaoBloqueio(item.Condicao)}}">
+                  <ion-input class="ion-no-padding" value="{{setCondicaoBloqueio(item.Condicao)}}" readonly></ion-input>
+                </div>
             </div>
           </ion-col>
         </ion-row>
@@ -79,11 +86,13 @@
   <br>
   <ion-row *ngFor="let item of Plataformas">
     <ion-col size="auto" style="display: inline-grid;">
-      <ion-icon class="iconArrow statusArrow{{setCondicaoArrowNorte(item)}}" name="arrow-back-circle-outline"></ion-icon>
+      <ion-icon class="iconArrow statusArrow{{setCondicaoArrowNorte(item)}}" name="arrow-back-circle-outline">
+      </ion-icon>
       <ion-label>Lado Norte</ion-label>
     </ion-col>
-    <ion-col size="auto" class="ion-text-center"  style="display: inline-grid;">
-      <ion-icon class="iconArrow statusArrow{{setCondicaoArrowSul(item)}}" name="arrow-forward-circle-outline"></ion-icon>
+    <ion-col size="auto" class="ion-text-center" style="display: inline-grid;">
+      <ion-icon class="iconArrow statusArrow{{setCondicaoArrowSul(item)}}" name="arrow-forward-circle-outline">
+      </ion-icon>
       <ion-label>Lado Sul</ion-label>
     </ion-col>
   </ion-row>
@@ -95,16 +104,32 @@
     <ion-row *ngFor="let item of Plataformas" style="display: inline;">
       <ion-label><strong>Plataforma</strong></ion-label>
       <br>
-      <div>
-        {{item.ContagemNorte}}<br>
-        <ion-label>Lado Norte: {{setPercentual(item.ContagemNorte)}}% </ion-label>
-        <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemNorte)}}" value="{{item.ContagemNorte}}" buffer=".9"></ion-progress-bar>
-        {{(item.ContagemSul * 100).toFixed(2)}}<br>
-        
-        <ion-input type="number" value="{{setPercentual(item.ContagemSul)}}" disabled></ion-input>
-        <span>Lado Norte: {{setPercentual(item.ContagemSul)}}% </span>
-        <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemSul)}}" value="{{item.ContagemSul}}" buffer=".9"></ion-progress-bar>
-      </div>
+      
+        <!-- <span>Lado Norte: {{setPercentual(item.ContagemNorte)}}% </span> -->
+        <ion-grid>
+          <ion-row size="auto" style="display: flex;">
+            <span>Lado Norte: </span>
+            <div style="width:60px">
+              <ion-input class="ion-no-padding" value="{{setPercentual(item.ContagemNorte)}}" readonly></ion-input>
+            </div>
+          </ion-row>
+        </ion-grid>
+        <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemNorte)}}" value="{{item.ContagemNorte}}"
+          buffer=".9"></ion-progress-bar>
+
+
+        <!-- <span>Lado Sul: {{setPercentual(item.ContagemSul)}}% </span> -->
+        <ion-grid>
+          <ion-row size="auto" style="display: flex;">
+            <span>Lado Norte: </span>
+            <div style="width:60px">
+              <ion-input class="ion-no-padding" value="{{setPercentual(item.ContagemSul)}}" readonly></ion-input>
+            </div>
+          </ion-row>
+        </ion-grid>
+        <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemSul)}}" value="{{item.ContagemSul}}" buffer=".9">
+          </ion-progress-bar>
+
     </ion-row>
   </ion-grid>
 
