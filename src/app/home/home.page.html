@@ -96,13 +96,14 @@
       <ion-label><strong>Plataforma</strong></ion-label>
       <br>
       <div>
-        <ion-label>Lado norte: {{setPercentual(item.ContagemNorte)}}% </ion-label>
+        {{item.ContagemNorte}}<br>
+        <ion-label>Lado Norte: {{setPercentual(item.ContagemNorte)}}% </ion-label>
         <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemNorte)}}" value="{{item.ContagemNorte}}" buffer=".9"></ion-progress-bar>
-        <ion-label>Lado sul: {{setPercentual(item.ContagemSul)}}%</ion-label>
+        {{(item.ContagemNorte * 100).toFixed(2)}}<br>
+        <ion-label>Lado Sul: {{setPercentual(item.ContagemSul)}}%</ion-label>
         <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemSul)}}" value="{{item.ContagemSul}}" buffer=".9"></ion-progress-bar>
       </div>
     </ion-row>
   </ion-grid>
-
 
 </ion-content>

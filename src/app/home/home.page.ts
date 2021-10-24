@@ -229,6 +229,6 @@ export class HomePage {
 
   public setPercentual(numero: number){
     let num = numero * 100;
-    return num.toFixed(2);
+    return num.toFixed(2).toString();
   }
 }
