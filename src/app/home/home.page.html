@@ -14,25 +14,27 @@
   </ion-header>
 
   <ion-item>
-    <div>
-      <ion-input class="ion-no-padding" value="{{showData}}" readonly></ion-input>
+    <div style="width:90%">
+      <ion-input class="ion-no-padding" value="{{ShowDataRotina()}}" readonly></ion-input>
     </div>
   </ion-item>
-
-
-
-  <h1>Linha de Bloqueios</h1>
 
   <ion-card class="cardControle">
     <h1>Controle das Simulações</h1>
     <ion-grid>
       <ion-row>
         <ion-col style="display: inline-grid;">
-          <ion-label>Modo Manual</ion-label>
+          <div class="tooltip">
+            <ion-label>Modo Manual <ion-icon name="help-circle"></ion-icon></ion-label>
+            <span class="tooltiptext">Permite o encarregado habilitar os bloqueios manualmente</span>
+          </div>
           <ion-toggle [(ngModel)]="modoManual"></ion-toggle>
         </ion-col>
         <ion-col style="display: inline-grid;">
-          <ion-label>Sem trem</ion-label>
+          <div class="tooltip">
+            <ion-label>Sem trem <ion-icon name="help-circle"></ion-icon></ion-label>
+            <span class="tooltiptext">Indica se há trem no circuito</span>
+          </div>
           <ion-toggle [(ngModel)]="noTrem"></ion-toggle>
         </ion-col>
         <ion-col>
@@ -41,15 +43,24 @@
       </ion-row>
       <ion-row>
         <ion-col size="auto" style="display: inline-grid;">
-          <ion-label>Coef. Bloqueio</ion-label>
+          <div class="tooltip">
+            <ion-label>Coef. Bloqueio <ion-icon name="help-circle"></ion-icon></ion-label>
+            <span class="tooltiptext">Taxa de entrada de passagem</span>
+          </div>
           <ion-input type="number" [(ngModel)]="coefPassageiro" min="1" max="8"></ion-input>
         </ion-col>
         <ion-col size="auto" style="display: inline-grid;">
-          <ion-label>Intervalo entre ciclos</ion-label>
+          <div class="tooltip">
+            <ion-label>Intervalo entre ciclos <ion-icon name="help-circle"></ion-icon></ion-label>
+            <span class="tooltiptext">Intervalo de cada amostragem</span>
+          </div>
           <ion-input type="number" [(ngModel)]="tempoIntervalo" min="1" max="10"></ion-input>
         </ion-col>
         <ion-col size="auto" style="display: inline-grid;">
-          <ion-label>Headway em ciclos</ion-label>
+          <div class="tooltip">
+            <ion-label>Headway em ciclos <ion-icon name="help-circle"></ion-icon></ion-label>
+            <span class="tooltiptext">Intervalo entre os trens na plataforma</span>
+          </div>
           <ion-input size="auto" type="number" [(ngModel)]="headwayPlataforma" min="1" max="30"></ion-input>
         </ion-col>
       </ion-row>
@@ -58,6 +69,7 @@
 
 
 
+  <h1>Linha de Bloqueios</h1>
 
 
   <ion-grid>
@@ -73,9 +85,9 @@
               <ion-label class="labelBloqueio">N. {{item.Numero}}</ion-label>
               <ion-img class="BloqueioImg" src="/assets/bloqueio.png" (click)="toggleBloqueio(LinhaBloqueio, i)">
               </ion-img>
-                <div style="width:80px" class="labelBloqueio status{{setCondicaoBloqueio(item.Condicao)}}">
-                  <ion-input class="ion-no-padding" value="{{setCondicaoBloqueio(item.Condicao)}}" readonly></ion-input>
-                </div>
+              <div style="width:80px" class="labelBloqueio status{{setCondicaoBloqueio(item.Condicao)}}">
+                <ion-input class="ion-no-padding" value="{{setCondicaoBloqueio(item.Condicao)}}" readonly></ion-input>
+              </div>
             </div>
           </ion-col>
         </ion-row>
@@ -84,6 +96,10 @@
   </ion-grid>
 
   <br>
+  <div class="tooltip">
+    <h3>Setas de indicação<ion-icon name="help-circle"></ion-icon></h3>
+    <span class="tooltiptext">Indicam o sentido onde há menos aglomeração na plataforma</span>
+  </div>
   <ion-row *ngFor="let item of Plataformas">
     <ion-col size="auto" style="display: inline-grid;">
       <ion-icon class="iconArrow statusArrow{{setCondicaoArrowNorte(item)}}" name="arrow-back-circle-outline">
@@ -104,31 +120,31 @@
     <ion-row *ngFor="let item of Plataformas" style="display: inline;">
       <ion-label><strong>Plataforma</strong></ion-label>
       <br>
-      
-        <!-- <span>Lado Norte: {{setPercentual(item.ContagemNorte)}}% </span> -->
-        <ion-grid>
-          <ion-row size="auto" style="display: flex;">
-            <span>Lado Norte: </span>
-            <div style="width:60px">
-              <ion-input class="ion-no-padding" value="{{setPercentual(item.ContagemNorte)}}" readonly></ion-input>
-            </div>
-          </ion-row>
-        </ion-grid>
-        <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemNorte)}}" value="{{item.ContagemNorte}}"
-          buffer=".9"></ion-progress-bar>
+
+      <!-- <span>Lado Norte: {{setPercentual(item.ContagemNorte)}}% </span> -->
+      <ion-grid>
+        <ion-row size="auto" style="display: flex;">
+          <span>Lado Norte: </span>
+          <div style="width:60px">
+            <ion-input class="ion-no-padding" value="{{setPercentual(item.ContagemNorte)}}" readonly></ion-input>
+          </div>
+        </ion-row>
+      </ion-grid>
+      <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemNorte)}}" value="{{item.ContagemNorte}}"
+        buffer=".9"></ion-progress-bar>
 
 
-        <!-- <span>Lado Sul: {{setPercentual(item.ContagemSul)}}% </span> -->
-        <ion-grid>
-          <ion-row size="auto" style="display: flex;">
-            <span>Lado Norte: </span>
-            <div style="width:60px">
-              <ion-input class="ion-no-padding" value="{{setPercentual(item.ContagemSul)}}" readonly></ion-input>
-            </div>
-          </ion-row>
-        </ion-grid>
-        <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemSul)}}" value="{{item.ContagemSul}}" buffer=".9">
-          </ion-progress-bar>
+      <!-- <span>Lado Sul: {{setPercentual(item.ContagemSul)}}% </span> -->
+      <ion-grid>
+        <ion-row size="auto" style="display: flex;">
+          <span>Lado Norte: </span>
+          <div style="width:60px">
+            <ion-input class="ion-no-padding" value="{{setPercentual(item.ContagemSul)}}" readonly></ion-input>
+          </div>
+        </ion-row>
+      </ion-grid>
+      <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemSul)}}" value="{{item.ContagemSul}}" buffer=".9">
+      </ion-progress-bar>
 
     </ion-row>
   </ion-grid>

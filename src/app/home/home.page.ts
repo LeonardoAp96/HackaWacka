@@ -20,10 +20,11 @@ export class HomePage {
 
   private NIVEL_WARNING : number = .7;
   private NIVEL_DANGER : number = .9;
-  private dataInicial: Date;
   private dataAtual: Date;
   private countSimultationTime: number;
+  private countTime = 0;
 
+  public filaBloqueio:number;
   public linhaBloqueio: Bloqueio[];
   public Plataformas: Plataforma[];
   public showData: String;
@@ -39,11 +40,12 @@ export class HomePage {
     this.coefPassageiro = 5;
     this.headwayPlataforma = 10;
     this.countSimultationTime = 0;
+    this.filaBloqueio = 0;
     this.ShowDataRotina();
     this.montarPlataforma();
   }  
   
-  routine = setInterval(()=>this.rotina(), this.tempoIntervalo * 1000);
+  routine = setInterval(()=>this.rotina(), 1000);
 
   private montarPlataforma(){
     this.Plataformas = [
@@ -63,10 +65,13 @@ export class HomePage {
   }
   
   private rotina(){
-    this.dataAtual = new Date();
-    this.ShowDataRotina();
-    this.Simulação();
-    this.countSimultationTime += 1;
+    this.countTime++;
+    if(this.countTime%this.tempoIntervalo == 0){
+     this.dataAtual = new Date();
+     this.ShowDataRotina();
+     this.Simulação();
+     this.countSimultationTime += 1;
+    }
   }
 
   private Simulação(){ //Demostração de dados colhidos pela cameraxbloqueio
@@ -74,7 +79,7 @@ export class HomePage {
     let percentualPasgPlatNorte = 0;
     let percentualPasgPlatSul = 0;
 
-    if(this.countSimultationTime%this.headwayPlataforma == 0 && !this.noTrem){ //Passagem do trem
+    if(this.countSimultationTime>this.headwayPlataforma && !this.noTrem){ //Passagem do trem
       for(let count = 0; count < this.Plataformas.length; count++){
         percentualPasgPlatNorte = this.Plataformas[count].ContagemNorte *0.1;
         percentualPasgPlatSul = this.Plataformas[count].ContagemNorte *0.1;
@@ -82,6 +87,7 @@ export class HomePage {
         this.Plataformas[count].ContagemNorte = this.setMinValue(percentualPasgPlatNorte);
         this.Plataformas[count].ContagemSul = this.setMinValue(percentualPasgPlatSul);
       }
+      this.countSimultationTime=0;
     }
     else { //Entrada de passageiros
       countBloqueio = this.getQuantBloqueioLigado(this.Plataformas);
@@ -132,7 +138,7 @@ export class HomePage {
 
 //Funcoes
   public tremNaPlataforma(){
-    this.countSimultationTime = 10;
+    this.countSimultationTime = this.headwayPlataforma;
     this.noTrem = false;
   }
 
@@ -153,7 +159,7 @@ export class HomePage {
     return ((Math.random() * count) / 100) * this.coefPassageiro;
   }
 
-  private ShowDataRotina(){
+  public ShowDataRotina(){
     this.showData = this.setZeroData(this.dataAtual.getDate()) + "/" + 
                     this.setZeroData((this.dataAtual.getMonth()+1))  + "/" + 
                     this.dataAtual.getFullYear() + "  " + 
@@ -161,6 +167,7 @@ export class HomePage {
                     this.setZeroData(this.dataAtual.getMinutes()) + ":" +
                     this.dataAtual.getSeconds();
     
+    return this.showData + " - ciclo:" + this.countSimultationTime + " de " + this.headwayPlataforma; 
   }
 
   private getQuantBloqueioLigado(plataformas :Plataforma[]){
