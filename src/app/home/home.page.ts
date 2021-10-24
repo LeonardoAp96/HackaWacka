@@ -118,9 +118,9 @@ export class HomePage {
     let countBloqueio = this.getQuantBloqueioLigado(this.Plataformas);
     let TotalBloqueio = this.Plataformas[0].LinhaBloqueio.length;
 
-    let percentualFila = this.setMinValue(this.filaBloqueio + this.getRandomFila(countBloqueio, TotalBloqueio));
+    let percentualFila = this.setMaxValue(this.filaBloqueio + this.getRandomFila(countBloqueio, TotalBloqueio));
 
-    if(this.countSimultationFilaTime>=this.headwayPlataforma && !this.noTrem){ 
+    if(this.countSimultationFilaTime>=(this.headwayPlataforma/2) && !this.noTrem){ 
       if(this.filaBloqueio >0.7){this.filaBloqueio *= 0.5;}
       else{this.filaBloqueio *= 0.2;}
       this.countSimultationFilaTime=0;
@@ -205,8 +205,10 @@ export class HomePage {
     return ((Math.random() * (count)) / 100) * this.coefFila;
   }
 
-  public SetFilaBloqueio(num){
-    this.filaBloqueio = num;
+  public SetFilaBloqueio(num:number,isReset: Boolean){
+    this.filaBloqueio += num;
+    if(isReset)
+      this.filaBloqueio = num;
   }
 
   public ShowDataRotina(){

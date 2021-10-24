@@ -13,6 +13,17 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-tabs>
+    <ion-tab-bar slot="top">
+      <ion-tab-button tab="/about">
+        <ion-icon name="information-circle"></ion-icon>
+        <ion-label>About</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+  <ion-button [routerLink]="['sobre']">Sobre nós</ion-button>
+
   <ion-item>
     <div style="width:90%">
       <ion-input class="ion-no-padding" value="{{ShowDataRotina()}}" readonly></ion-input>
@@ -64,7 +75,7 @@
           <div class="tooltip">
             <ion-label>Coef. Bloqueio <ion-icon name="help-circle"></ion-icon>
             </ion-label>
-            <span class="tooltiptext">Taxa de entrada de passagem</span>
+            <span class="tooltiptext">Taxa de entrada de passageiros</span>
           </div>
           <ion-input type="number" [(ngModel)]="coefPassageiro" min="1" max="8"></ion-input>
         </ion-col>
@@ -72,29 +83,27 @@
           <div class="tooltip">
             <ion-label>Coef. Fila Bloqueio <ion-icon name="help-circle"></ion-icon>
             </ion-label>
-            <span class="tooltiptext">Taxa de entrada de passagem</span>
+            <span class="tooltiptext">Taxa da fila de entrada</span>
           </div>
           <ion-input type="number" [(ngModel)]="coefPassageiro" min="1" max="8"></ion-input>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-button color="primary" (click)="SetFilaBloqueio(0.5)">Adcionar passageiros</ion-button>
+          <ion-button color="primary" (click)="SetFilaBloqueio(0.1,false)">Adcionar 10% na Fila</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button color="primary" (click)="SetFilaBloqueio(0.1)">Reset passageiros</ion-button>
+          <ion-button color="primary" (click)="SetFilaBloqueio(0.1,true)">Reset Fila</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
 
-
-
   <h1>Linha de Bloqueios</h1>
 
   <ion-grid>
     <ion-row size="auto" style="display: flex;">
-      <span>Ocupação de entrada: </span>
+      <span>Ocupação da fila de entrada: </span>
       <div style="width:60px">
         <ion-input class="ion-no-padding" value="{{setPercentual(filaBloqueio)}}" readonly></ion-input>
       </div>
@@ -165,11 +174,9 @@
       <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemNorte)}}" value="{{item.ContagemNorte}}"
         buffer=".9"></ion-progress-bar>
 
-
-      <!-- <span>Lado Sul: {{setPercentual(item.ContagemSul)}}% </span> -->
       <ion-grid>
         <ion-row size="auto" style="display: flex;">
-          <span>Lado Norte: </span>
+          <span>Lado Sul: </span>
           <div style="width:60px">
             <ion-input class="ion-no-padding" value="{{setPercentual(item.ContagemSul)}}" readonly></ion-input>
           </div>
@@ -180,5 +187,7 @@
 
     </ion-row>
   </ion-grid>
+
+  <br><br><br><br><br>
 
 </ion-content>
