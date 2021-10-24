@@ -68,7 +68,7 @@
             <div class="colBloqueio">
               <ion-label class="labelBloqueio">N. {{item.Numero}}</ion-label>
               <ion-img class="BloqueioImg" src="/assets/bloqueio.png" (click)="toggleBloqueio(LinhaBloqueio, i)"></ion-img>
-              <ion-label class="labelBloqueio status{{setCondicaoBloqueio(item.Condicao)}}" >{{setCondicaoBloqueio(item.Condicao)}}</ion-label>
+              <ion-text class="labelBloqueio status{{setCondicaoBloqueio(item.Condicao)}}" >{{setCondicaoBloqueio(item.Condicao)}}</ion-text>
             </div>
           </ion-col>
         </ion-row>
@@ -100,7 +100,7 @@
         <ion-label>Lado Norte: {{setPercentual(item.ContagemNorte)}}% </ion-label>
         <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemNorte)}}" value="{{item.ContagemNorte}}" buffer=".9"></ion-progress-bar>
         {{(item.ContagemSul * 100).toFixed(2)}}<br>
-        <p>Lado Sul: {{setPercentual(item.ContagemSul)}}%</p>
+        <span>Lado Norte: {{setPercentual(item.ContagemSul)}}% </span>
         <ion-progress-bar color="{{setCondicaoProgressBar(item.ContagemSul)}}" value="{{item.ContagemSul}}" buffer=".9"></ion-progress-bar>
       </div>
     </ion-row>
