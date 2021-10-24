@@ -22,9 +22,11 @@ export class HomePage {
   private NIVEL_DANGER : number = .9;
   private dataAtual: Date;
   private countSimultationTime: number;
+  private countSimultationFilaTime: number;
   private countTime = 0;
 
   public filaBloqueio:number;
+  public coefFila: number;
   public linhaBloqueio: Bloqueio[];
   public Plataformas: Plataforma[];
   public showData: String;
@@ -37,10 +39,12 @@ export class HomePage {
 
   constructor() {
     this.dataAtual = new Date();  
-    this.coefPassageiro = 5;
+    this.coefPassageiro = 2;
+    this.coefFila = 2;
     this.headwayPlataforma = 10;
     this.countSimultationTime = 0;
-    this.filaBloqueio = 0;
+    this.countSimultationFilaTime = 0;
+    this.filaBloqueio = 0.1;
     this.ShowDataRotina();
     this.montarPlataforma();
   }  
@@ -70,7 +74,9 @@ export class HomePage {
      this.dataAtual = new Date();
      this.ShowDataRotina();
      this.Simulação();
+     this.SimulacaoFila();
      this.countSimultationTime += 1;
+     this.countSimultationFilaTime += 1;
     }
   }
 
@@ -79,7 +85,8 @@ export class HomePage {
     let percentualPasgPlatNorte = 0;
     let percentualPasgPlatSul = 0;
 
-    if(this.countSimultationTime>this.headwayPlataforma && !this.noTrem){ //Passagem do trem
+
+    if(this.countSimultationTime>=this.headwayPlataforma && !this.noTrem){ //Passagem do trem
       for(let count = 0; count < this.Plataformas.length; count++){
         percentualPasgPlatNorte = this.Plataformas[count].ContagemNorte *0.1;
         percentualPasgPlatSul = this.Plataformas[count].ContagemNorte *0.1;
@@ -87,6 +94,7 @@ export class HomePage {
         this.Plataformas[count].ContagemNorte = this.setMinValue(percentualPasgPlatNorte);
         this.Plataformas[count].ContagemSul = this.setMinValue(percentualPasgPlatSul);
       }
+
       this.countSimultationTime=0;
     }
     else { //Entrada de passageiros
@@ -96,11 +104,33 @@ export class HomePage {
         percentualPasgPlatNorte = this.Plataformas[count].ContagemNorte + this.getRandomPassageiro(countBloqueio);
         percentualPasgPlatSul = this.Plataformas[count].ContagemSul + this.getRandomPassageiro(countBloqueio);
         
-        this.Plataformas[count].ContagemNorte = this.setMaxValue(this.Plataformas[count].ContagemNorte + this.getRandomPassageiro(countBloqueio));
-        this.Plataformas[count].ContagemSul =  this.setMaxValue(this.Plataformas[count].ContagemSul + this.getRandomPassageiro(countBloqueio));
+        this.Plataformas[count].ContagemNorte = this.setMaxValue(percentualPasgPlatNorte);
+        this.Plataformas[count].ContagemSul =  this.setMaxValue(percentualPasgPlatSul);
       };
+      
     };
+
+
     this.AlgoritmoBloqueios();
+  }
+
+  private SimulacaoFila(){
+    let countBloqueio = this.getQuantBloqueioLigado(this.Plataformas);
+    let TotalBloqueio = this.Plataformas[0].LinhaBloqueio.length;
+
+    let percentualFila = this.setMinValue(this.filaBloqueio + this.getRandomFila(countBloqueio, TotalBloqueio));
+
+    if(this.countSimultationFilaTime>=this.headwayPlataforma && !this.noTrem){ 
+      if(this.filaBloqueio >0.7){this.filaBloqueio *= 0.5;}
+      else{this.filaBloqueio *= 0.2;}
+      this.countSimultationFilaTime=0;
+    }else{
+      if(countBloqueio >= (TotalBloqueio/2))
+        this.filaBloqueio -= this.getRandomFila(countBloqueio,TotalBloqueio);
+
+      this.filaBloqueio = this.setMaxValue(percentualFila);
+    }
+  
   }
 
   private AlgoritmoBloqueios(){
@@ -118,6 +148,19 @@ export class HomePage {
     if(!this.modoManual){
       if(mediaOcupacao <.5){
         this.setLigarBloqueio(4);
+        
+        if(this.filaBloqueio>0.5)
+          this.setLigarBloqueio(5);
+        
+        if(this.filaBloqueio>0.7)
+          this.setLigarBloqueio(6);
+
+        if(this.filaBloqueio>0.75)
+          this.setLigarBloqueio(6);
+
+        if(this.filaBloqueio>0.8)
+          this.setLigarBloqueio(8);
+        
       }
       if(mediaOcupacao >=.5){
         this.setLigarBloqueio(3);
@@ -133,7 +176,6 @@ export class HomePage {
       }
     }
   }
-
 
 
 //Funcoes
@@ -157,6 +199,14 @@ export class HomePage {
 
   private getRandomPassageiro(count:number) {
     return ((Math.random() * count) / 100) * this.coefPassageiro;
+  }
+
+  private getRandomFila(count:number, total:number) {
+    return ((Math.random() * (count)) / 100) * this.coefFila;
+  }
+
+  public SetFilaBloqueio(num){
+    this.filaBloqueio = num;
   }
 
   public ShowDataRotina(){
